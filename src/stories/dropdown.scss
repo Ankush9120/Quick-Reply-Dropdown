@@ -7,6 +7,9 @@
   font-family: "Inter", sans-serif;
 }
 
+$secondary-color:#5B5B5C;
+
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -24,24 +27,37 @@
 
 .dropdown {
   width: 343px;
+  max-width: 100%;
+
+  .dropdownHeader {
+    display: flex;
+    justify-content: space-between;
+
+    .label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+      font-weight: 600;
+      font-size: 13.5px;
+      line-height: 20.25px;
+
+      .required {
+        color: #f73131;
+      }
+    }
+
+    .clearable{
+      font-size: 13.5px;
+      color: $secondary-color;
+      cursor: pointer;
+    }
+  }
 
   .helperText {
     font-size: 12px;
     font-weight: 500;
     line-height: 18px;
-  }
-  .label {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-bottom: 4px;
-    font-weight: 600;
-    font-size: 13.5px;
-    line-height: 20.25px;
-
-    .required {
-      color: #f73131;
-    }
   }
   .field {
     display: flex;
@@ -60,11 +76,39 @@
       cursor: pointer;
       border: none;
       flex-grow: 1;
+      width: 100%;
       outline: none;
+
+      &:hover {
+        text-overflow: unset;
+      }
     }
   }
   .dropdownMenuWrapper {
     position: relative;
+
+    .backdrop{
+      position: fixed;
+      height: 100vh;
+      width: 100vw;
+      top: 0;
+      left: 0;
+      z-index: 99;
+    }
+
+    &[data-dropdownactive="true"] {
+      &::before {
+        content: "";
+        height: 14px;
+        width: 14px;
+        background: #47b647;
+        border-radius: 2px;
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+      }
+    }
 
     .dropdownMenu {
       box-sizing: content-box;
@@ -76,8 +120,12 @@
       border-radius: 8px;
       overflow-y: auto;
       list-style: none;
-      border: 1px solid grey;
+      background: white;
+      border: 1px solid #d9d9db;
       width: 248px;
+      max-width: 100%;
+      box-shadow: 0px 3px 12px 0px #0000001a;
+      z-index: 100;
 
       .dropdownMenuItem {
         white-space: nowrap;
@@ -89,6 +137,7 @@
         height: 40px;
         padding: 8px 12px;
         cursor: pointer;
+
         .radio {
           display: grid;
           place-items: center;
@@ -120,7 +169,7 @@
           }
         }
 
-        .checkIcon{
+        .checkIcon {
           display: none;
         }
 
@@ -144,7 +193,7 @@
             }
           }
 
-          .checkIcon{
+          .checkIcon {
             display: block;
           }
 

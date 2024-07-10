@@ -27,16 +27,24 @@ export enum DropdownTypeEnum {
   Multi = "Multi",
 }
 
+export enum ClearableTypeEnum {
+  Yes = "Yes",
+  No = "No",
+}
+
 export interface DropdownProps {
   label?: string;
   labelVisibility?: LabelVisibilityTypeEnum;
   status: StatusTypeEnum;
   labelIconVisibility: IconVisibilityTypeEnum;
   leftIconVisibility: IconVisibilityTypeEnum;
+  rightIconVisibility: IconVisibilityTypeEnum;
   helperText?: string;
   required: RequiredTypeEnum;
   text: string;
   type: DropdownTypeEnum;
   activeItemIndex: number;
   items: string[];
+  onSelection: any;
+  clearable: ClearableTypeEnum;
 }
