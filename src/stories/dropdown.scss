@@ -1,0 +1,178 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f2f3f5;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #d9d9db;
+}
+
+.dropdown {
+  width: 343px;
+
+  .helperText {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 4px;
+    font-weight: 600;
+    font-size: 13.5px;
+    line-height: 20.25px;
+
+    .required {
+      color: #f73131;
+    }
+  }
+  .field {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    gap: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    border: 1px solid #d9d9db;
+    height: 40px;
+
+    input {
+      text-overflow: ellipsis;
+      font-size: 15px;
+      line-height: 24px;
+      cursor: pointer;
+      border: none;
+      flex-grow: 1;
+      outline: none;
+    }
+  }
+  .dropdownMenuWrapper {
+    position: relative;
+
+    .dropdownMenu {
+      box-sizing: content-box;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 200px;
+      border-radius: 8px;
+      overflow-y: auto;
+      list-style: none;
+      border: 1px solid grey;
+      width: 248px;
+
+      .dropdownMenuItem {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+        padding: 8px 12px;
+        cursor: pointer;
+        .radio {
+          display: grid;
+          place-items: center;
+          position: relative;
+          height: 20px;
+          min-width: 20px;
+          border-radius: 50%;
+          border: 1.5px solid #747475;
+          background: white;
+        }
+        .checkIcon {
+          color: #47b647;
+          margin-left: auto;
+        }
+        &:hover {
+          background: #f2f3f5;
+        }
+
+        .checkbox {
+          border-radius: 4px;
+          min-width: 20px;
+          height: 20px;
+          display: grid;
+          place-items: center;
+          padding-bottom: 1px;
+          border: 1.5px solid #747475;
+          .check {
+            display: none;
+          }
+        }
+
+        .checkIcon{
+          display: none;
+        }
+
+        &[data-active="true"] {
+          .radio {
+            &::before {
+              content: "";
+              height: 12px;
+              width: 12px;
+              background: #47b647;
+              border-radius: 50%;
+            }
+          }
+
+          .checkbox {
+            background: #47b647;
+            border: 1.5px solid #47b647;
+            .check {
+              display: block;
+              color: white;
+            }
+          }
+
+          .checkIcon{
+            display: block;
+          }
+
+          &[data-background="true"] {
+            background: #edfaed;
+          }
+        }
+      }
+    }
+  }
+  &[data-error="true"] {
+    .field {
+      border: 2px solid #f73131;
+    }
+    .helperText {
+      color: #f73131;
+      font-weight: 500;
+    }
+  }
+  &[data-disabled="true"] {
+    .field {
+      color: #c0c0c2;
+      cursor: not-allowed;
+    }
+    input {
+      background: transparent;
+      color: #c0c0c2;
+      cursor: not-allowed;
+    }
+  }
+}
