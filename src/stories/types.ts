@@ -1,50 +1,28 @@
-export enum LabelVisibilityTypeEnum {
-  Visible = "Visible",
-  Hidden = "Hidden",
-}
+export type LabelVisibilityType = "Visible" | "Hidden";
 
-export enum StatusTypeEnum {
-  Unfilled = "Unfilled",
-  Filled = "Filled",
-  Disabled = "Disabled",
-  Error = "Error",
-}
+export type StatusType = "Unfilled" | "Filled" | "Disabled" | "Error";
 
-export enum IconVisibilityTypeEnum {
-  Visible = "Visible",
-  Hidden = "Hidden",
-}
+export type IconVisibilityType = "Visible" | "Hidden";
 
-export enum RequiredTypeEnum {
-  Yes = "Yes",
-  No = "No",
-}
+export type RequiredType = "Yes" | "No";
 
-export enum DropdownTypeEnum {
-  SingleNoIcon = "SingleNoIcon",
-  SingleRadio = "SingleRadio",
-  SingleCheck = "SingleCheck",
-  Multi = "Multi",
-}
+export type DropdownType = "SingleNoIcon" | "SingleRadio" | "SingleCheck" | "Multi";
 
-export enum ClearableTypeEnum {
-  Yes = "Yes",
-  No = "No",
-}
+export type ClearableType = "Yes" | "No";
 
 export interface DropdownProps {
   label?: string;
-  labelVisibility?: LabelVisibilityTypeEnum;
-  status: StatusTypeEnum;
-  labelIconVisibility: IconVisibilityTypeEnum;
-  leftIconVisibility: IconVisibilityTypeEnum;
-  rightIconVisibility: IconVisibilityTypeEnum;
+  labelVisibility?: LabelVisibilityType;
+  status?: StatusType;
+  labelIconVisibility?: IconVisibilityType;
+  leftIconVisibility?: IconVisibilityType;
+  rightIconVisibility?: IconVisibilityType;
   helperText?: string;
-  required: RequiredTypeEnum;
-  text: string;
-  type: DropdownTypeEnum;
-  activeItemIndex: number;
+  required?: RequiredType;
+  text?: string;
+  type?: DropdownType;
+  activeItemIndex?: number;
   items: string[];
-  onSelection: any;
-  clearable: ClearableTypeEnum;
+  onSelection?: (selectedItems: string | string[]) => void;
+  clearable?: ClearableType;
 }

@@ -1,8 +1,18 @@
 import React from 'react'
+import { Dropdown } from './stories/Dropdown'
 
-const App = () => {
+const data = [
+  "Mic",
+  "Om",
+  "Keshav",
+  "Shivam",
+  "Kasyap",
+  "Henry"
+]
+
+const App: React.FC = () => {
   return (
-    <div>App</div>
+    <Dropdown items={data} activeItemIndex={1} type={"SingleNoIcon"} />
   )
 }
 

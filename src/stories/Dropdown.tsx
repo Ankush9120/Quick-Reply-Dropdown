@@ -1,14 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import "./dropdown.scss";
-import {
-  ClearableTypeEnum,
-  DropdownProps,
-  DropdownTypeEnum,
-  IconVisibilityTypeEnum,
-  LabelVisibilityTypeEnum,
-  RequiredTypeEnum,
-  StatusTypeEnum,
-} from "./types";
+import { DropdownProps } from "./types";
 import { CaretDown, Check, Info, UserCircle } from "@phosphor-icons/react";
 
 export const Dropdown = ({
@@ -33,29 +25,31 @@ export const Dropdown = ({
   const selectedValue = selectedItem.length
     ? selectedItem.map((d) => items?.[d]).join(", ")
     : "";
-  
-  const isFilled = status === StatusTypeEnum.Filled;
-  const isUnfilled = status === StatusTypeEnum.Unfilled;
-  const isLabelVisible = labelVisibility === LabelVisibilityTypeEnum.Visible;
-  const isLabelIconVisible =
-    labelIconVisibility === IconVisibilityTypeEnum.Visible;
-  const isLeftIconVisible =
-    leftIconVisibility === IconVisibilityTypeEnum.Visible;
-  const isRightIconVisible =
-    rightIconVisibility === IconVisibilityTypeEnum.Visible;
-  const isClearable = clearable === ClearableTypeEnum.Yes;
-  const isNoIcon = type === DropdownTypeEnum.SingleNoIcon;
-  const isSingleRadio = type === DropdownTypeEnum.SingleRadio;
-  const isSingleCheck = type === DropdownTypeEnum.SingleCheck;
-  const isMulti = type === DropdownTypeEnum.Multi;
-  const isDisabled = status === StatusTypeEnum.Disabled;
-  const isError = status === StatusTypeEnum.Error;
+
+  const isFilled = status === "Filled";
+  const isUnfilled = status === "Unfilled";
+  const isLabelVisible = labelVisibility === "Visible";
+  const isLabelIconVisible = labelIconVisibility === "Visible";
+  const isLeftIconVisible = leftIconVisibility === "Visible";
+  const isRightIconVisible = rightIconVisibility === "Visible";
+  const isClearable = clearable === "Yes";
+  const isNoIcon = type === "SingleNoIcon";
+  const isSingleRadio = type === "SingleRadio";
+  const isSingleCheck = type === "SingleCheck";
+  const isMulti = type === "Multi";
+  const isDisabled = status === "Disabled";
+  const isError = status === "Error";
+  const isRequired = required === "Yes";
 
   useEffect(() => {
-    if(!items.includes(items[activeItemIndex])){
-      setSelectedItem([]);
+    if(activeItemIndex){
+      if (!items.includes(items[activeItemIndex])) {
+        setSelectedItem([]);
+      } else {
+        setSelectedItem([activeItemIndex]);
+      }
     }else{
-      setSelectedItem([activeItemIndex]);
+      setSelectedItem([]);
     }
   }, [activeItemIndex, type]);
 
@@ -64,13 +58,13 @@ export const Dropdown = ({
   }, [isDisabled]);
 
   useEffect(() => {
-    if(isFilled && !selectedItem.length) {
+    if (isFilled && !selectedItem.length) {
       setSelectedItem([0]);
     }
-    if(isUnfilled){
+    if (isUnfilled) {
       setSelectedItem([]);
     }
-  },[status])
+  }, [status]);
 
   const handleDropdownMenu = useCallback(() => {
     setIsDropdownMenuOpen(!isDropdownMenuOpen);
@@ -106,10 +100,10 @@ export const Dropdown = ({
   );
 
   const handleClear = useCallback(() => {
-    if(!isDisabled){
+    if (!isDisabled) {
       setSelectedItem([]);
     }
-  },[])
+  }, []);
 
   return (
     <div
@@ -122,13 +116,15 @@ export const Dropdown = ({
         {isLabelVisible && (
           <div className="label">
             {label} {isLabelIconVisible && <Info size={19.5} />}{" "}
-            {required === RequiredTypeEnum.Yes && (
-              <span className="required">*</span>
-            )}
+            {isRequired && <span className="required">*</span>}
           </div>
         )}
 
-        {isClearable && <div onClick={handleClear} className="clearable">clear</div>}
+        {isClearable && (
+          <div onClick={handleClear} className="clearable">
+            clear
+          </div>
+        )}
       </div>
       <div className="field" onClick={handleDropdownMenu}>
         {isLeftIconVisible && <UserCircle size={19.5} />}{" "}
@@ -145,29 +141,28 @@ export const Dropdown = ({
         className="dropdownMenuWrapper"
         data-dropdownactive={isDropdownMenuOpen}
       >
-        
         {isDropdownMenuOpen && (
           <>
             <div className="backdrop" onClick={handleDropdownMenu} />
             <ul className="dropdownMenu">
-            {items?.map((item, index) => (
-              <li
-                data-background={isNoIcon || isSingleCheck}
-                className="dropdownMenuItem"
-                data-active={selectedItem.includes(index)}
-                key={index}
-                onClick={() => handleDropDownSelection(index)}
-              >
-                {isMulti && (
-                  <div className="checkbox">
-                    <Check size={12} weight="bold" className="check" />
-                  </div>
-                )}
-                {isSingleRadio && <div className="radio" />} {item}{" "}
-                {isSingleCheck && <Check size={20} className="checkIcon" />}
-              </li>
-            ))}
-          </ul>
+              {items?.map((item, index) => (
+                <li
+                  data-background={isNoIcon || isSingleCheck || !type}
+                  className="dropdownMenuItem"
+                  data-active={selectedItem.includes(index)}
+                  key={index}
+                  onClick={() => handleDropDownSelection(index)}
+                >
+                  {isMulti && (
+                    <div className="checkbox">
+                      <Check size={12} weight="bold" className="check" />
+                    </div>
+                  )}
+                  {isSingleRadio && <div className="radio" />} {item}{" "}
+                  {isSingleCheck && <Check size={20} className="checkIcon" />}
+                </li>
+              ))}
+            </ul>
           </>
         )}
       </div>
